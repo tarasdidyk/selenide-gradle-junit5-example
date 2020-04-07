@@ -1,0 +1,72 @@
+plugins {
+    id 'io.qameta.allure' version '2.5' // Latest Plugin Version
+    id 'java'
+}
+
+allure {
+    autoconfigure = true
+    version = '2.7.0'  // Latest Allure Version
+
+    useJUnit5 {
+        version = '2.7.0' // Latest Allure Version
+    }
+
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+defaultTasks 'clean', 'test'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+configurations {
+    agent
+}
+
+dependencies {
+    agent "org.aspectj:aspectjweaver:1.8.10"
+    testImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    testImplementation 'com.codeborne:selenide:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    testImplementation 'org.awaitility:awaitility:4.0.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+}
+
+tasks.withType(Test) {
+    ignoreFailures = true
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+    testLogging.showStandardStreams = true
+    systemProperty 'target.environment', System.getProperty('target.environment')
+    systemProperty 'home.page.url', System.getProperty('home.page.url')
+    systemProperty 'allure.results.directory', 'build/allure-results'
+}
+
+task generateAllure(type: Exec) {
+    workingDir "$projectDir/allure/bin"
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine 'cmd', '/c', 'allure.bat', 'generate', '-c', '../../build/allure-results'
+    } else {
+        commandLine 'bash', '-c', 'allure', 'generate', '-c', "$projectDir/build/allure-results"
+    }
+}
+
+test {
+    useJUnitPlatform() {
+        includeTags 'test'
+        // excludeTags 'slow', 'ci'
+        //includeEngines 'junit-jupiter'
+        // excludeEngines 'junit-vintage'
+    }
+}
+
+if (System.getProperty('target.environment') == 'local') {
+    tasks.withType(Test)*.finalizedBy generateAllure
+}
+
+
