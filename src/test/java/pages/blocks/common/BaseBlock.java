@@ -1,9 +1,8 @@
 package pages.blocks.common;
 
-import com.codeborne.selenide.ElementsContainer;
 import utils.DriverHelper;
 
-public abstract class BaseBlock extends ElementsContainer {
+public abstract class BaseBlock {
   public DriverHelper h;
 
   public BaseBlock() {
