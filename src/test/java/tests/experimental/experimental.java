@@ -1,10 +1,11 @@
 package tests.experimental;
 
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.main.MainPage;
+import pages.search.SearchResultPage;
 import tests.common.BaseTest;
+import utils.enums.RepositoryNames;
 
 import static com.codeborne.selenide.Selenide.open;
 
@@ -14,9 +15,10 @@ public class experimental extends BaseTest {
   @Test
   public void test() {
     MainPage mainPage = new MainPage();
+    SearchResultPage searchResultPage = new SearchResultPage();
     open("");
-    mainPage.headerBlock.enterDataInTheSearchField("maven");
+    mainPage.headerBlock.enterDataInTheSearchField("java");
     mainPage.headerBlock.clickSearchButton();
-    Selenide.sleep(3000);
+    searchResultPage.leftSearchResultMenuFiltersBlock.selectRepositoryFilter(RepositoryNames.CENTRAL);
   }
 }
