@@ -32,4 +32,9 @@ public abstract class BaseTest {
   public static byte[] saveScreenshot() {
     return ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
   }
+
+  @Attachment(type = "text/plain")
+  public String saveOutput(String data) {
+    return data;
+  }
 }
