@@ -58,7 +58,7 @@ task generateAllure(type: Exec) {
 
 test {
     useJUnitPlatform() {
-        includeTags 'test'
+        includeTags 'search'
         // excludeTags 'slow', 'ci'
         //includeEngines 'junit-jupiter'
         // excludeEngines 'junit-vintage'
