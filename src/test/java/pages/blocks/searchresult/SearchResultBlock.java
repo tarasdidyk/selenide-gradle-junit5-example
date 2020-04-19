@@ -7,18 +7,15 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import pages.blocks.common.BaseBlock;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class SearchResultBlock extends BaseBlock {
-  private SelenideElement searchResultBlock = $(By.xpath("//div[@id = 'maincontent']"));
-
   private ElementsCollection searchResults = $$(By.xpath(".//div[@class = 'im']"));
 
   @Step("Is repository displayed")
   public boolean isRepositoryDisplayed(String name, String group) {
-    for(SelenideElement result: searchResults) {
-      if(result.is(Condition.text(name)) && result.is(Condition.text(group))) {
+    for (SelenideElement result : searchResults) {
+      if (result.is(Condition.text(name)) && result.is(Condition.text(group))) {
         return true;
       }
     }
