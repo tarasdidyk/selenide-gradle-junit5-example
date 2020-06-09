@@ -65,8 +65,9 @@ test {
     }
 }
 
-if (System.getProperty('target.environment') == 'local') {
+if (System.getProperty('os.name').toLowerCase().contains("window")) {
     tasks.withType(Test)*.finalizedBy generateAllure
 }
+
 
 

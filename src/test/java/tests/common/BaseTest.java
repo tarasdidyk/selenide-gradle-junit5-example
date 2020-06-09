@@ -16,9 +16,9 @@ public abstract class BaseTest {
   static void setUpDriver() {
     if (Utils.isEnvironmentRemote()) {
       Configuration.driverManagerEnabled = false;
-      Configuration.remote = "http://192.168.0.103:4444/wd/hub";
+      Configuration.remote = "http://192.168.0.101:4444/wd/hub";
     }
-    Configuration.baseUrl = "https://mvnrepository.com/";
+    Configuration.baseUrl = System.getProperty("home.page.url");
     Configuration.startMaximized = true;
     Configuration.downloadsFolder = "src/test/resources/download/";
   }
